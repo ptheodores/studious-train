@@ -1,0 +1,65 @@
+* My attack involves guessing the middle text. What I do is I
+guess every possible key for the first encryption by encrypting 
+the ciphertext with each of these keys. I make a hashmap, where 
+hashmap-key is the encrypted plaintext, and the hashmap-value
+is the key guess. Basically, this includes all possible middle
+texts for the first plaintext-ciphertext pair. Next, I loop through
+all possible keys for the second encryption by decrypting the
+ciphertext. For each decryption, I see if the decrypted ciphertext
+is in my hashmap as a hashmap-key. If it is, it's a possible
+guess for the second encrpyption key. I take the guessed encryption 
+keys and check them against the other pairs. If this works, then I
+found the right key and I cracked the encryption. This works because
+I know that there has to be a middletext, and I know that for each
+plaintext, there's at most 2^24 possibilities for that it could be,
+which makes it easy enough for me to try and guess it.
+
+* The vulnerability is that I know that the encryption involves two 
+encryptions with 24-bit keys, so I know there are a relatively small
+number of middletexts. Using this, I can try and guess all the possible
+middletexts using my guesses for the first key, and see if I can find
+a second key that makes that middletext work. I suppose it also works
+because I know that the encryption is two 24-bit keys, because if I didn't,
+I'd just be guessing 48-bits worth of data. Without the vulnerability 
+of me knowing that the encryption has two separate 24-bit keys, I could
+still crack this with my method (i.e. guessing keys one at a time), but it 
+would take an unreasonable amount of time and wouldn't be feasible.
+
+* We could fix this by using a 48-bit key, which would make it take
+too long to crack the encryption, but still technically possible with enough 
+time and computing power. You could also encrypt 3 times, which would 
+slow down this attack quite a bit (since you'd be guessing at two different
+middletexts), but would still be less strong than just using an encryption
+key that is 3-times as long, which is the best answer for how to fix this.
+Using a 48-bit key is 2^24 times as strong as a single, 28-bit key, while 
+the design suggested by the homework is only twice (at most) as strong as a 
+single 2^24 bit key.
+
+CODE EXPLANATION (FROM STENCIL):
+*My code runs exactly as the stencil does and I added no helper 
+methods*
+
+You can compile your *.java files using the `make build` command.
+This will compile them into several *.class files. You can then run
+your compiled program using the `java` command and passing your
+`pairs` file to standard input like so:
+
+    java -Xmx4g Main < pairs
+
+where `pairs` is the path to your `pairs` file for the Keys problem.
+The -Xmx4g flag is used to increase the size of the Java heap, which
+may be too small depending on how you're working on the solution.
+
+We provide an additional helper class called `ByteArrayWrapper`.
+The purpose of this class is to allow you to easily perform equality
+comparisons on arrays of type `byte[]`. Normally, equality checks
+on `byte[]` instances are determined by object identity rather than
+the contents of the array. However, `ByteArrayWrapper` implements
+the `equals` and `hashCode` methods that allow you to perform
+comparisons on byte arrays without having to convert them to another
+representation. This also allows you to easily pass `ByteArrayWrapper`
+instances to data structures that perform equality checks internally.
+
+The stencil (and provided `Cipher`) make use of the `ByteArrayWrapper`
+class by default, so we recommend that you use it in your own
+implementation.

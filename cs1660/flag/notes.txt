@@ -1,0 +1,19 @@
+1. Business Logic
+	-check usernames against existing usernames
+	-reject any duplicates
+	-model for this: rejecting bad characters in input
+2. Client-Side Data
+	-keep this server side!
+	-each request to server should include valid cookie id which should be matched to correct user
+3. CSRF
+	-CSRF token! hidden POST value
+	-SameSite cookies to strict - might be annoying but would help
+	-referer header would be a huge one
+	-re-login to change user data! (this seems very relevant to editing profile/username, less important for comments):
+4. XSS
+	-clearly the website removes "script" from comments, so if we expand this to inclde variants like "SCRIPT" this will work
+	-fixing the csrf vulnerability would help here too (but you can still do attacks without csrf).
+5. File Upload
+	-better parsing of files
+	-check last 4 chars of filename are ".pdf"
+	-could also reject any files with ".php" or similar

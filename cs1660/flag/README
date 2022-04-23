@@ -1,0 +1,31 @@
+Collaboration statement: I used only the resources in the wiki + TA hours to complete this assignment
+
+My attacks that use deliverables:
+1. Business logic
+	-change username to an already existing account (e.g. bernardo)
+	-NO DELIVERABLES
+2. Client Hidden Sensitive Data
+	-http://34.135.19.82/handins
+	-you can get access to literally any handin
+	-I verify this by uploading a pdf to someone else's account
+	-NO DELIVERABLES
+3. CSRF
+	-use csrf.html (which could be sent in a phishing scam)
+	-this will change username/profile pic/bio if a logged in user clicks it
+	-DELIVERABLES:
+		-csrf.html
+4. XSS
+	-This builds on the CSRF vulnerability which I uncovered earlier
+	-While a user is logged in, get them to visit the website/file xsscsrf.html
+	-This replaces their username with a script which redirects users to a webpage
+	-Specifically, if bernardo reaches into this webpage, an assignment gets deleted
+	-DELIVERABLES:
+		-xsscsrf.html
+5. File-Upload 
+	-Upload file
+	-Navigate to file and input using ?cmd! You now run a shell on the website
+	-DELIVERABLES:
+		-shell.pdf.php (file to upload)
+		-shell-cmd.txt (example of a destructive cmd to input)
+
+NO VIDEO DEMO - I'm meeting with a TA!
